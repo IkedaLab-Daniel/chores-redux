@@ -1,32 +1,25 @@
-import { nanoid } from "@reduxjs/toolkit";
-
-const createHumans = (name) => ({
-    id: nanoid(),
-    name
+import { createSlice, nanoId } from '@reduxjs/toolkit';
+const createHuman = (name) => ({
+    id: nanoId(),
+    name,
+    taskIds: [],
 })
 
 const initialState = [
-    createHumans("John Doe"),
-    createHumans("Jane Smith"),
+    createHuman('Alice'),
+    createHuman('Bob'),
+    createHuman('Charlie'),
+    createHuman('Diana'),
+    createHuman('Eve'),
 ]
 
-// > slice for managing human entities
+// slice for managing humans
 export const humanSlice = createSlice({
     name: 'human',
     initialState,
     reducers: {
-        addHuman: (state, action) => {
-            state.push(createHumans(action.payload.name));
-        },
-        removeHuman: (state, action) => {
-            return state.filter(human => human.id !== action.payload.id);
-        },
-        updateHuman: (state, action) => {
-            const { id, name } = action.payload;
-            const human = state.find(human => human.id === id);
-            if (human) {
-                human.name = name;
-            }
+        add: (state, action) => {
+            state.push(createHuman(action.payload));
         }
     }
 })
