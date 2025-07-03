@@ -1,4 +1,5 @@
 import { createSlice, nanoId } from '@reduxjs/toolkit';
+import { tasksSlice } from './tasksSlice';
 const createHuman = (name) => ({
     id: nanoId(),
     name,
@@ -20,6 +21,20 @@ export const humanSlice = createSlice({
     reducers: {
         add: (state, action) => {
             state.push(createHuman(action.payload));
+        }
+    },
+    extraReducers: {
+        [someaction]: (state, action) => {
+            builder.addCase(tasksSlice.actions.assignHuman, (state, action) => {
+                for (const human of state) {
+                    if (human.id === action.payload.humanId) {
+                        human.taskIds.push(action.payload.taskId);
+                        break;
+                    } else{
+                        human.taskIds = human.taskIds.filter(id => id !== action.payload.taskId);
+                    }
+                }
+            }
         }
     }
 })
