@@ -1,5 +1,5 @@
-import { createStore } from 'redux';
+import { configureStore } from "@reduxjs/toolkit";
 
-export const store = createStore(
-  (state = { humans: [], tasks: [] }, action) => state
-);
+export const store = configureStore({
+  reducer: (state) => state
+});
