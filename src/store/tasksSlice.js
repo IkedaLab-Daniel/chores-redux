@@ -1,6 +1,6 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
-const createTasks = (title) => ({
+const createTask = (title) => ({
     id: nanoid(),
     title,
     completed: false,
@@ -8,8 +8,8 @@ const createTasks = (title) => ({
 })
 
 const initialState = [
-    createTasks('Order more energy drinks'),
-    createTasks('Water the plants')
+    createTask('Order more energy drinks'),
+    createTask('Water the plants')
 ]
 
 // > slice
@@ -19,5 +19,9 @@ export const  taskSlice = createSlice({
     add: (state, action) => {
         const task = createTask(action.payload);
         state.push(task);
+    },
+    toggle: (state, action) => {
+        const task = state.find(task => task.id === action.payload.taskId);
+        task.completed = action.payload.completed;
     }
 })
